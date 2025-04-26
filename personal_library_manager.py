@@ -11,44 +11,43 @@ Original file is located at
 
 import streamlit as st
 
+# Title of the app
 st.title("Personal Library Manager")
 
+# Initialize a book list (you could also use a database for this in a real app)
 if 'books' not in st.session_state:
-  st.session_state.books = []
+    st.session_state.books = []
 
-#add book section
-  st.header("Add a New Book")
-  booke_title = st.text_input("Enter book title")
-  book_author = st.text_input("Enter book author")
-  book_genre = st.text_input("Enter book genre")
+# Add Book section
+st.header("Add a New Book")
+book_title = st.text_input("Enter book title")
+book_author = st.text_input("Enter book author")
+book_genre = st.text_input("Enter book genre")
 
-
-#function to add book
- def add_book():
-  if book_title and book_author and book_genre:
-    st.session_state.books.append({
-        'title': book_title,
-        'author': book_author,
-        'genre': book_genre
-    })
-
-    st.success("Book added successfully!")
+# Function to add a book
+def add_book():
+    if book_title and book_author and book_genre:
+        st.session_state.books.append({
+            'title': book_title,
+            'author': book_author,
+            'genre': book_genre
+        })
+        st.success("Book added successfully!")
     else:
-      st.error("Please fill all fields.")
+        st.error("Please fill all fields.")
 
- if st.button("Add Book"):
-   add_book()
+if st.button("Add Book"):
+    add_book()
 
-#view all books
-
+# View All Books section
 st.header("All Books")
 if st.session_state.books:
-  for book in st.session_state.books:
-    st.write(f"Title: {book['title']}, Author: {book['author']}, Genre: {book['genre']}")
+    for book in st.session_state.books:
+        st.write(f"Title: {book['title']}, Author: {book['author']}, Genre: {book['genre']}")
 else:
-  st.write("No books added yet.")
+    st.write("No books added yet.")
 
-#Search for books
+# Search for Books section
 st.header("Search for a Book")
 search_query = st.text_input("Search by title or author")
 
@@ -60,7 +59,7 @@ if search_query:
     else:
         st.write("No books found with that query.")
 
-# Remove a Book
+# Remove a Book section
 st.header("Remove a Book")
 book_to_remove = st.selectbox("Select a book to remove", [book['title'] for book in st.session_state.books])
 
